@@ -1,0 +1,32 @@
+[
+    {
+        "timestamp": 1726039800.0,
+        "Wert": 28.2,
+        "stress_level": -39.4723183391,
+        "is_peak": false
+    },
+    {
+        "timestamp": 1726040700.0,
+        "Wert": 55.2,
+        "stress_level": -11.4446366782,
+        "is_peak": false
+    },
+    {
+        "timestamp": 1726041600.0,
+        "Wert": 61.8,
+        "stress_level": -7.1512110727,
+        "is_peak": false
+    },
+    {
+        "timestamp": 1726042500.0,
+        "Wert": 57.0,
+        "stress_level": -10.1740484429,
+        "is_peak": false
+    },
+    {
+        "timestamp": 1726043400.0,
+        "Wert": 64.8,
+        "stress_level": -5.53183391,
+        "is_peak": false
+    }
+]
