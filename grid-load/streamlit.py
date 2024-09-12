@@ -6,6 +6,7 @@ import altair as alt
 import pandas as pd
 import plotly.express as px
 
+import grid_load.processing as glp
 import streamlit as st
 
 #######################
@@ -75,15 +76,35 @@ st.markdown(
 #######################
 
 conn = sqlite3.connect("local.db")
-df = pd.read_sql(
+
+nb_row = 4 * 24 * 7
+
+df_grid = pd.read_sql(
     """
     SELECT
         *
     FROM
         grid_consumption
+    ORDER BY ts ASC
     """,
     conn,
-).tail(4 * 24 * 7)
+).tail(nb_row)
+grid_max, grid_diff = glp.household_stress_level_calculation(df_grid)
+
+df_user = pd.read_sql(
+    """
+    Select
+        *
+    from
+        user_consumption
+    ORDER BY ts ASC
+    """,
+    conn,
+)
+
+user_id = 64
+df_user = df_user[df_user["user_id"] == user_id].tail(nb_row)
+user_corr = glp.correlation_matrix_stress_level(df_grid, df_user)
 
 with st.sidebar:
     st.title("🏂 US Population Dashboard")
@@ -95,25 +116,44 @@ with st.sidebar:
 
 #######################
 # Dashboard Main Panel
-col = st.columns((0.6, 0.2, 0.2), gap="medium")
+col = st.columns((0.7, 0.3), gap="medium")
 
 with col[0]:
-    st.markdown("#### Gains/Losses")
+    st.markdown("#### Grid Consumption")
     st.line_chart(
-        df.set_index("ts")[["Wert", "threshold"]],
-        color=["#29b5e8", "#155F7A"],
+        df_grid.set_index("Datum")[["Wert", "threshold"]],
+        color=["#29b5e8", "#FF0000"],
+    )
+    st.markdown("#### User Consumption")
+    st.line_chart(
+        df_user.set_index("Datum")[["Wert", "threshold"]],
+        color=["#29b5e8", "#FF0000"],
     )
 
+
 with col[1]:
-    st.markdown("#### Total Population")
+    st.markdown("#### Grid")
+    progess = grid_diff / grid_max
+    color = None
+    if progess > 0.80:
+        color = "#FF0000"
+    elif progess > 0.60:
+        color = "#FFA500"
+    elif progess > 0.40:
+        color = "#FFFF00"
+    st.markdown(
+        f"""
+    <style>
+        .stProgress > div > div > div > div {{
+            background-color: {color};
+        }} …
+    </style>""",
+        unsafe_allow_html=True,
+    )
+    st.progress(progess, f"{grid_diff}kW / {grid_max}kW")
 
+    st.markdown("#### User Consumption")
 
-with col[2]:
-    st.markdown("#### Top States")
-
-    with st.expander("About", expanded=True):
-        st.write("""
-            - Data: [U.S. Census Bureau](https://www.census.gov/data/datasets/time-series/demo/popest/2010s-state-total.html).
-            - :orange[**Gains/Losses**]: states with high inbound/ outbound migration for selected year
-            - :orange[**States Migration**]: percentage of states with annual inbound/ outbound migration > 50,000
-            """)
+    st.markdown("Current price: 1.5CHF/kWh")
+    st.markdown("Estimated price: 15.7CHF/kWh")
+    st.markdown(f"Correlation over the last 30 days: {user_corr}")

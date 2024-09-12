@@ -69,7 +69,7 @@ def correlation_matrix_stress_level(
     df_grid: pd.DataFrame,
     df_household: pd.DataFrame,
     window: float | None = None,
-) -> pd.DataFrame:
+) -> float:
     if window is not None:
         window = int(window)
         df_grid = df_grid.tail(window)
@@ -85,7 +85,30 @@ def correlation_matrix_stress_level(
 
     merged_df = df_grid.merge(df_household, on="Datum")
 
-    return merged_df[["diff_percentage_grid", "diff_percentage_household"]].corr()
+    corr = merged_df[["diff_percentage_grid", "diff_percentage_household"]].corr()
+
+    return round(corr.loc["diff_percentage_household"]["diff_percentage_grid"], 3)  # type: ignore
+
+
+def household_stress_level_calculation(df_grid: pd.DataFrame) -> tuple[float, float]:
+    df_grid = df_grid.copy()
+    df_grid["date_fmt"] = pd.to_datetime(df_grid["date_fmt"])
+    last_wert_month = df_grid["date_fmt"].iloc[-1].month
+    last_wert_year = df_grid["date_fmt"].iloc[-1].year
+    current_df = df_grid[
+        (
+            df_grid["date_fmt"].apply(lambda x: pd.to_datetime(x).month)
+            == last_wert_month
+        )
+        & (
+            df_grid["date_fmt"].apply(lambda x: pd.to_datetime(x).year)
+            == last_wert_year
+        )
+    ]
+
+    max_value_of_the_month = current_df["Wert"].max()
+    household_stress_level = max_value_of_the_month - df_grid["Wert"].iloc[-1]
+    return max_value_of_the_month, round(household_stress_level, 3)
 
 
 def to_json(

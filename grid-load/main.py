@@ -100,7 +100,7 @@ def read_user_consumption(
         df_user,
         window=7 * 24 * 4,
     )
-    corr_value = round(corr.loc["diff_percentage_household"]["diff_percentage_grid"], 3)
+    corr_value = round(corr.loc["diff_percentage_household"]["diff_percentage_grid"], 3)  # type: ignore
 
     conn.close()
     return {
