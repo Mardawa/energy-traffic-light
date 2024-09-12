@@ -2,22 +2,22 @@ import pathlib as pl
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
 
 
 def extract_data(csv_path):
     df = pd.read_csv(csv_path, sep=";")
-    df["date_fmt"] = pd.to_datetime(df["Datum"], format="%d.%m.%Y %H:%M:%S %z")
+    df["date_fmt"] = pd.to_datetime(
+        df["Datum"],
+        format="%d.%m.%Y %H:%M:%S %z",
+        utc=True,
+    )
     return df[df["Wert"] > 0]
 
 
 def calc_diff_percentage(row):
-    val = (row["Wert"] - row["threshold"]) ** 2 / row["threshold"]
-    if row["Wert"] < row["threshold"]:
-        val = -val
-    return val
+    return (row["Wert"] - row["threshold"]) / row["threshold"]
 
 
 def transform_data(
@@ -37,11 +37,11 @@ def transform_data(
     )
     df["threshold"] = df[["moving_avg", "quantile"]].max(axis=1)
     df["high_usage"] = df["Wert"] > df["threshold"]
-    df["high_usage"] = df["high_usage"].shift(1).fillna(value=False) & df[
-        "high_usage"
-    ].shift(-1).fillna(value=False)
 
-    df["diff_percentage"] = df.apply(lambda x: calc_diff_percentage(x), axis=1)
+    df["diff_percentage"] = df.apply(
+        lambda x: calc_diff_percentage(x),
+        axis=1,
+    )
     df["ts"] = df["date_fmt"].apply(lambda x: x.timestamp())
     return df
 
@@ -65,9 +65,33 @@ def plot(df: pd.DataFrame):
     axes[1].axhline(y=0, color="black", linestyle="--")
 
 
+def correlation_matrix_stress_level(
+    df_grid: pd.DataFrame,
+    df_household: pd.DataFrame,
+    window: float | None = None,
+) -> pd.DataFrame:
+    if window is not None:
+        window = int(window)
+        df_grid = df_grid.tail(window)
+        df_household = df_household.tail(window)
+
+    df_grid = df_grid.loc[:, ["Datum", "diff_percentage"]]
+    df_household = df_household.loc[:, ["Datum", "diff_percentage"]]
+
+    df_grid = df_grid.rename(columns={"diff_percentage": "diff_percentage_grid"})
+    df_household = df_household.rename(
+        columns={"diff_percentage": "diff_percentage_household"}
+    )
+
+    merged_df = df_grid.merge(df_household, on="Datum")
+
+    return merged_df[["diff_percentage_grid", "diff_percentage_household"]].corr()
+
+
 def to_json(
     df: pd.DataFrame,
     path: pl.Path | None = None,
+    extra_col: str | None = None,
 ):
     col_to_keep = [
         "ts",
@@ -75,6 +99,9 @@ def to_json(
         "diff_percentage",
         "high_usage",
     ]
+
+    if col_to_keep is not None:
+        col_to_keep = col_to_keep + [extra_col]
 
     df = df[col_to_keep]
     df = df.rename(
