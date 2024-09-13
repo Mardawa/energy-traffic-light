@@ -1,0 +1,87 @@
+Requirements
+1. Core Features:
+Real-time Load Visualization:
+
+Traffic light system to represent grid load levels (low, medium, high load) in real-time.
+Data fetched from Janitza power meter via local server (mocked for development).
+Thresholds for load levels to trigger color changes in the visualization.
+Household Consumption Monitoring:
+
+Visual representation of household electricity consumption (e.g., daily, weekly, or monthly).
+Display energy use as a bar or line chart, allowing users to see patterns over time.
+Correlation with Grid Load:
+
+Compare household consumption with grid load data, highlighting times where the user contributes to peak loads.
+Option to display the user’s impact on grid peaks with a call to action to reduce usage during peak times.
+Price and Savings Insights:
+
+Display dynamic electricity pricing based on grid load and peak hours.
+Suggestions on how users can save by shifting consumption to off-peak times.
+Gamification and Incentives:
+
+Introduce a scoring system where users earn points for consuming electricity off-peak.
+Leaderboards or progress bars showing how well a user is performing relative to their peers or personal goals.
+Notifications and Alerts:
+
+Notify users when the grid is under high load (red light) and encourage them to reduce consumption.
+2. UI/UX Design Considerations:
+Intuitive Design:
+
+The traffic light visualization should be central to the UI for easy understanding of grid load status.
+Charts for household consumption and grid load comparison should be clean and interactive (hovering over data points to reveal details).
+Mobile-friendly:
+
+Ensure the app is responsive, working well on both desktop and mobile platforms.
+Customizable Timeframes:
+
+Allow users to switch between daily, weekly, and monthly views for consumption and grid data.
+Accessible and Simple:
+
+Avoid information overload. Key data such as current load, consumption, and pricing should be front and center, with additional details accessible through tooltips or expandable sections.
+Color Coding:
+
+Use color coding (e.g., green for low load, yellow for medium, red for high) to make the state of the grid clear at a glance.
+Ensure the color scheme is accessible for color-blind users (e.g., using patterns or additional symbols).
+UI/UX Mockup Design
+1. Dashboard Overview:
+The home page should have an intuitive dashboard with:
+
+Traffic Light Grid Load Indicator: Prominently display the real-time grid load with color coding:
+
+Green: Low load.
+Yellow: Medium load.
+Red: High load.
+Household Consumption Graph:
+
+A line or bar chart showcasing household electricity consumption over time (toggle between daily, weekly, monthly).
+Price Awareness Panel:
+
+A section that shows current electricity price based on grid load and projected cost savings for off-peak consumption.
+Actionable Insights & Tips:
+
+Provide insights on reducing energy usage during peak hours, with simple energy-saving tips.
+2. User Interaction:
+Call to Action:
+When the grid is at a peak load (red light), an overlay or alert message can encourage users to take action (e.g., “Reduce consumption now to avoid peak costs!”).
+Points & Gamification Section:
+A scoring system, showing points earned for consuming off-peak or within personalized limits.
+A leaderboard or progress bar showing how the user compares to community members or their past performance.
+3. Detailed Consumption Insights Page:
+Load & Consumption Comparison:
+A detailed page where users can compare their consumption with grid load patterns on a timeline, showing how their usage aligns with peak or off-peak times.
+Potential Savings:
+A visual breakdown of potential cost savings if consumption is reduced during peak hours.
+4. Settings Page:
+Custom Alerts:
+
+Allow users to set custom notifications (e.g., alert me when grid load is high).
+Timeframe Selection:
+
+Users can customize their data view to see trends over specific timeframes (e.g., daily, weekly, monthly).
+5. Data Privacy & Control:
+Data Transparency:
+Users should be able to see how their data is being used, with options to opt-in or out of certain data sharing (if relevant).
+
+
+
+TECH STACK: solid.js, emotion/css
