@@ -44,9 +44,6 @@ importers:
       solid-form-handler:
         specifier: ^1.2.3
         version: 1.2.3(solid-js@1.8.22)
-      solid-icons:
-        specifier: ^1.1.0
-        version: 1.1.0(solid-js@1.8.22)
       solid-js:
         specifier: ^1.8.22
         version: 1.8.22
@@ -1339,11 +1336,6 @@ packages:
     resolution: {integrity: sha512-OCQ358dgxXeUi4TkA7D/xrrhrsUeY0K/m1EGn5ZUPMuPyx+1Hp2PjtthsAyvsaoj9jyJppK3pAwY2eytseUlZw==}
     peerDependencies:
       solid-js: ^1
-
-  solid-icons@1.1.0:
-    resolution: {integrity: sha512-IesTfr/F1ElVwH2E1110s2RPXH4pujKfSs+koT8rwuTAdleO5s26lNSpqJV7D1+QHooJj18mcOiz2PIKs0ic+A==}
-    peerDependencies:
-      solid-js: '*'
 
   solid-js@1.8.22:
     resolution: {integrity: sha512-VBzN5j+9Y4rqIKEnK301aBk+S7fvFSTs9ljg+YEdFxjNjH0hkjXPiQRcws9tE5fUzMznSS6KToL5hwMfHDgpLA==}
@@ -2745,10 +2737,6 @@ snapshots:
   shebang-regex@3.0.0: {}
 
   solid-form-handler@1.2.3(solid-js@1.8.22):
-    dependencies:
-      solid-js: 1.8.22
-
-  solid-icons@1.1.0(solid-js@1.8.22):
     dependencies:
       solid-js: 1.8.22
 
