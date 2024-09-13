@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "description": "Traffic Consumption Visualization",
-  "homepage": "https://Mardawa.github.io/energy-traffic-light/",
+  "homepage": "https://mardawa.github.io/energy-traffic-light/",
   "scripts": {
     "start": "vite",
     "build": "vite build",

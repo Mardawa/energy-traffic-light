@@ -11,7 +11,7 @@ const runCommand = (command) => {
   return true;
 };
 
-const repoUrl = 'git@github.com:Mardawa/energy-traffic-light.git';
+const repoUrl = 'git@github.com:mardawa/energy-traffic-light.git';
 
 const main = () => {
   const currentDir = process.cwd();

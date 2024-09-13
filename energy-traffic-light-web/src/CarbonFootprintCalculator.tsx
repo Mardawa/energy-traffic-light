@@ -12,11 +12,11 @@ interface Dinosaur {
 }
 
 const dinosaurs: Dinosaur[] = [
-  { name: 'T-Rex', emoji: '🦖', powerOutput: 6640, joke: "That's enough energy to power your home for 221 days! Imagine this mighty T-Rex's fossil fuel powering your Netflix binge. Maybe it's time to switch to green energy and let the T-Rex rest in peace!" },
-  { name: 'Brachiosaurus', emoji: '🦕', powerOutput: 33200, joke: "This gentle giant's remains could power your home for 1,106 days! They didn't turn into fossil fuel just for you to leave the lights on in every room. Try some renewable energy, so Brachiosaurus can finally retire!" },
-  { name: 'Velociraptor', emoji: '🦖', powerOutput: 12.5, joke: "This little guy's fossil fuel could only power your home for about 10 hours. If they knew you were wasting their remains on scrolling endlessly through social media, they'd chase you down. Go green and save a raptor's legacy!" },
-  { name: 'Stegosaurus', emoji: '🦕', powerOutput: 2490, joke: "Stego's fossil remains here could power your home for 83 days. Are you using it to charge your phone while you leave it plugged in overnight? Consider switching to solar – the sun doesn't mind being used, unlike Stego here." },
-  { name: 'Triceratops', emoji: '🦏', powerOutput: 8300, joke: "This three-horned friend's fossil fuel could power your home for 276 days. Do you think these armored tanks turned into oil just so you could forget to turn off the AC? Switch to renewable energy, and give Triceratops' remains the rest they deserve!" },
+  { name: 'T-Rex', emoji: '🦖', powerOutput: 6640, joke: "That's enough dino-juice to power your home for 221 days! Imagine this mighty T-Rex's fossil fuel powering your Netflix binge. Maybe it's time to switch to green energy and let the T-Rex rest in prehistoric peace!" },
+  { name: 'Brachiosaurus', emoji: '🦕', powerOutput: 33200, joke: "This long-necked giant's remains could fuel your home for 1,106 days! They didn't turn into prehistoric power just for you to leave the lights on in every room. Try some renewable energy, so Brachiosaurus can finally retire from the power grid!" },
+  { name: 'Velociraptor', emoji: '🦖', powerOutput: 12.5, joke: "This speedy little guy's dino-juice could only power your home for about 10 hours. If they knew you were wasting their remains on scrolling endlessly through social media, they'd chase you down faster than you can say 'clever girl'. Go green and save a raptor's legacy!" },
+  { name: 'Stegosaurus', emoji: '🦕', powerOutput: 2490, joke: "Stego's prehistoric power here could fuel your home for 83 days. Are you using it to charge your phone while you leave it plugged in overnight? Consider switching to solar – the sun doesn't mind being used, unlike our spiky friend Stego here." },
+  { name: 'Triceratops', emoji: '🦏', powerOutput: 8300, joke: "This three-horned friend's dino-juice could power your home for 276 days. Do you think these armored tanks turned into oil just so you could forget to turn off the AC? Switch to renewable energy, and give Triceratops' remains the fossil-free rest they deserve!" },
 ];
 
 const DinosaurCarousel: Component<{ energy: number }> = (props) => {
@@ -152,8 +152,8 @@ const DinosaurCarousel: Component<{ energy: number }> = (props) => {
             <div class={styles.dinoName}>{dino.name}</div>
             <div class={styles.dinoInfo}>
               {props.energy > 0
-                ? `Your energy use (${props.energy} kWh) is equivalent to ${calculateDinoEnergy(props.energy, dino)}% of the fossil fuel energy from a ${dino.name}!`
-                : `The fossil fuel from a ${dino.name} could power your home for ${calculateHomePowerDays(dino)} days!`}
+                ? `Your energy use (${props.energy} kWh) is like burning through ${calculateDinoEnergy(props.energy, dino)}% of the fossil fuel made from a ${dino.name}'s dino-sized body after it became dino-juice millions of years ago!`
+                : `The fossil fuel from a ${dino.name} could power your home for ${calculateHomePowerDays(dino)} days! That's a lot of prehistoric power!`}
             </div>
             <div class={styles.dinoJokeContainer}>
               <div class={styles.dinoJoke}>{dino.joke}</div>
