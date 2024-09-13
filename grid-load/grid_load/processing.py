@@ -2,6 +2,7 @@ import pathlib as pl
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
 
@@ -55,7 +56,7 @@ def plot(df: pd.DataFrame):
 
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d.%m.%Y"))
     plt.gca().xaxis.set_minor_formatter(mdates.DateFormatter("%H"))
-    plt.gca().xaxis.set_minor_locator(mdates.HourLocator(interval=1))
+    plt.gca().xaxis.set_minor_locator(mdates.HourLocator(interval=6))
     plt.xticks(rotation=45)
 
     sns.lineplot(data=df, x="date_fmt", y="Wert", ax=axes[0])
@@ -109,6 +110,36 @@ def household_stress_level_calculation(df_grid: pd.DataFrame) -> tuple[float, fl
     max_value_of_the_month = current_df["Wert"].max()
     household_stress_level = max_value_of_the_month - df_grid["Wert"].iloc[-1]
     return max_value_of_the_month, round(household_stress_level, 3)
+
+
+def p_calculate(
+    high_price: float, low_price: float, selected_df: pd.DataFrame
+) -> float:
+    # Define the time range for "high"
+    start_time = pd.to_datetime("06:00:00").time()
+    end_time = pd.to_datetime("22:00:00").time()
+
+    selected_df["type_price"] = None
+    # Create 'type_price' column based on the time condition
+    selected_df["type_price"] = np.where(
+        (selected_df["date_fmt"].dt.time >= start_time)
+        & (selected_df["date_fmt"].dt.time <= end_time),
+        "high",
+        "low",
+    )
+
+    df_price = pd.DataFrame(
+        {"type_price": ["high", "low"], "price_per_kwh": [high_price, low_price]}
+    )
+    selected_df = selected_df.merge(df_price, on="type_price")
+    selected_df["price"] = selected_df["Wert"] * selected_df["price_per_kwh"]
+
+    return round(selected_df["price"].sum(), 2)
+
+
+def cost_of_highest_peak(price_highest: float, selected_df: pd.DataFrame) -> float:
+    highest = selected_df["Wert"].max()
+    return round(highest * price_highest * 0.25, 2)
 
 
 def to_json(

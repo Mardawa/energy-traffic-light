@@ -2899,6 +2899,21 @@ watchdog = {version = ">=2.1.5,<5", markers = "platform_system != \"Darwin\""}
 snowflake = ["snowflake-connector-python (>=2.8.0)", "snowflake-snowpark-python[modin] (>=1.17.0)"]
 
 [[package]]
+name = "streamviz"
+version = "5.1"
+description = "Custom Plotly visualizations for Streamlit"
+optional = false
+python-versions = "*"
+files = [
+    {file = "streamviz-5.1-py2.py3-none-any.whl", hash = "sha256:5e72bb02dbe1a574cecb14f97c3885aae563b8582bb8b7370d04afd8e9e19e86"},
+    {file = "streamviz-5.1.tar.gz", hash = "sha256:b0bf91e357e3c3b3b9592b8dcb10d7b9628273fb2e9163649353ce3747674c59"},
+]
+
+[package.dependencies]
+plotly = "*"
+streamlit = "*"
+
+[[package]]
 name = "tenacity"
 version = "8.5.0"
 description = "Retry code until it succeeds"
@@ -3382,4 +3397,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "513be4ee1a545b8f7656474666be3d9b3ba733a88d1b71350a17e5cef852b857"
+content-hash = "6a576f7efea3678d5376d31b806164a406a06415a90b061ea8b08980cc1ebbea"
