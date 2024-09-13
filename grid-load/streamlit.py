@@ -180,7 +180,15 @@ with col[0]:
     st.line_chart(
         df_grid_filtered.set_index("Datum")[["Wert", "threshold"]],
         color=["#29b5e8", "#FF0000"],
+        x_label="Time",
+        y_label="kW",
     )
+    # st.line_chart(
+    #     df_grid_filtered.set_index("Datum")["Wert"],
+    #     color=["#29b5e8"],
+    #     x_label="Time",
+    #     y_label="kW",
+    # )
 
     st.markdown(f"#### User {user_id} Consumption")
     st.line_chart(
@@ -193,7 +201,7 @@ with col[0]:
 with col[1]:
     st.markdown("#### Grid")
 
-    # st.markdown(f"Stress level: {current_stress_level}")
+    st.markdown(f"Stress level: {current_stress_level}")
     if current_stress_level > 0.0:
         st.error(
             "The grid is heavely under load. Try to lower your consumption.",
