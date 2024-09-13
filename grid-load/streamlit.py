@@ -142,7 +142,7 @@ with st.sidebar:
 
     df_grid_filtered = df_grid[
         (df_grid["ts"] >= start_time_ts) & (df_grid["ts"] <= end_time_ts)
-    ]
+    ].copy()
     grid_max, grid_diff = glp.household_stress_level_calculation(df_grid_filtered)
     current_stress_level = round(df_grid_filtered["diff_percentage"].iloc[-1], 3)
 
@@ -155,7 +155,7 @@ with st.sidebar:
         (df_user["user_id"] == user_id)
         & (df_user["ts"] >= start_time_ts)
         & (df_user["ts"] <= end_time_ts)
-    ]
+    ].copy()
 
     user_corr = glp.correlation_matrix_stress_level(
         df_grid_filtered,
