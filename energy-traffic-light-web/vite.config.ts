@@ -7,7 +7,7 @@ export default defineConfig({
       plugins: ['@emotion/babel-plugin']
     }
   })],
-  base: '/energy-traffic-light-web/',
+  base: '/energy-traffic-light/',
   build: {
     target: 'esnext',
   },
